@@ -1,8 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameEngine.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\LadderScript.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameEngine.cs" Line="9" Column="3" />
+      <File FileName="Assets\Scripts\GameEngine.cs" Line="29" Column="19" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="86" Column="16" />
+      <File FileName="Assets\Scripts\PlayerPhysics.cs" Line="23" Column="2" />
+      <File FileName="Assets\Scripts\Scenes\Scene.cs" Line="16" Column="2" />
+      <File FileName="Assets\Scripts\Scenes\GameScene.cs" Line="24" Column="3" />
+      <File FileName="Assets\Scripts\CameraScript.cs" Line="11" Column="2" />
+      <File FileName="Assets\Scripts\LadderScript.cs" Line="8" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

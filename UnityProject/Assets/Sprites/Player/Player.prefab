@@ -59,10 +59,10 @@ MonoBehaviour:
   forcedTextureWidth: 2048
   forcedTextureHeight: 2048
   textureCompression: 0
-  atlasWidth: 512
-  atlasHeight: 1024
+  atlasWidth: 256
+  atlasHeight: 512
   forceSquareAtlas: 0
-  atlasWastage: 52.0311356
+  atlasWastage: 39.037323
   allowMultipleAtlases: 0
   removeDuplicates: 1
   textureParams:
@@ -97,9 +97,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 13, y: 26}
+    boxColliderMax: {x: 37, y: 63}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -137,9 +137,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 13, y: 26}
+    boxColliderMax: {x: 37, y: 63}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -177,9 +177,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 13, y: 26}
+    boxColliderMax: {x: 37, y: 63}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -217,9 +217,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 13, y: 26}
+    boxColliderMax: {x: 37, y: 63}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -257,9 +257,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 2
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 13, y: 26}
+    boxColliderMax: {x: 37, y: 63}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -297,9 +297,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 13, y: 26}
+    boxColliderMax: {x: 37, y: 63}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -337,9 +337,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 32, y: 38}
+    boxColliderMax: {x: 64, y: 88}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -377,9 +377,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 32, y: 38}
+    boxColliderMax: {x: 64, y: 88}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -417,9 +417,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 32, y: 38}
+    boxColliderMax: {x: 64, y: 88}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -457,9 +457,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 32, y: 38}
+    boxColliderMax: {x: 64, y: 88}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -497,9 +497,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 32, y: 38}
+    boxColliderMax: {x: 64, y: 88}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -537,9 +537,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 32, y: 38}
+    boxColliderMax: {x: 64, y: 88}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -577,9 +577,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 32, y: 38}
+    boxColliderMax: {x: 64, y: 88}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -617,9 +617,9 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 32, y: 38}
+    boxColliderMax: {x: 64, y: 88}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -657,9 +657,89 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 0
-    boxColliderMin: {x: 0, y: 0}
-    boxColliderMax: {x: 0, y: 0}
+    colliderType: 3
+    boxColliderMin: {x: 32, y: 38}
+    boxColliderMax: {x: 64, y: 88}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: falling
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: 28d154dea76527649a973ed53882bf4d, type: 3}
+    materialId: 0
+    anchor: 4
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    pad: 0
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 3
+    boxColliderMin: {x: 32, y: 38}
+    boxColliderMax: {x: 64, y: 88}
+    polyColliderIslands: []
+    polyColliderCap: 1
+    colliderConvex: 0
+    colliderSmoothSphereCollisions: 0
+    colliderColor: 0
+    attachPoints: []
+  - name: rising
+    disableTrimming: 0
+    additive: 0
+    scale: {x: 1, y: 1, z: 1}
+    texture: {fileID: 2800000, guid: f0870a5148043a547aab38d145ef823e, type: 3}
+    materialId: 0
+    anchor: 4
+    anchorX: 0
+    anchorY: 0
+    overrideMesh: {fileID: 0}
+    doubleSidedSprite: 0
+    customSpriteGeometry: 0
+    geometryIslands: []
+    dice: 0
+    diceUnitX: 64
+    diceUnitY: 64
+    diceFilter: 0
+    pad: 0
+    extraPadding: 0
+    source: 0
+    fromSpriteSheet: 0
+    hasSpriteSheetId: 0
+    spriteSheetId: 0
+    spriteSheetX: 0
+    spriteSheetY: 0
+    extractRegion: 0
+    regionX: 0
+    regionY: 0
+    regionW: 0
+    regionH: 0
+    regionId: 0
+    colliderType: 3
+    boxColliderMin: {x: 32, y: 38}
+    boxColliderMax: {x: 64, y: 88}
     polyColliderIslands: []
     polyColliderCap: 1
     colliderConvex: 0
@@ -699,7 +779,7 @@ MonoBehaviour:
   normalGenerationMode: 0
   padAmount: -1
   autoUpdate: 1
-  editorDisplayScale: 1
+  editorDisplayScale: 2.08000016
   version: 4
   assetName: 
 --- !u!1001 &100100000

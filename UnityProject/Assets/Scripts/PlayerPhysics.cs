@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 
 // As inpired by YouTube Platformer Tutorial
 [RequireComponent (typeof(BoxCollider))]
 public class PlayerPhysics : MonoBehaviour {
 	public LayerMask collisionMask;
+	public int debug_value;
 
 	private BoxCollider collider;
 	private Vector3 s;
@@ -21,15 +22,24 @@ public class PlayerPhysics : MonoBehaviour {
 	private float skin = .005f;
 
 	[HideInInspector]
+	public bool flipX;
+	[HideInInspector]
 	public bool grounded;
 	[HideInInspector]
 	public bool stopped;
+	[HideInInspector]
+	public bool canClimb;
+	[HideInInspector]
+	public bool climbing;
+
+	private List<Ladder> ladder_list;
 
 	Ray ray;
 	RaycastHit hit;
 
 	// Use this for initialization
 	void Start () {
+		ladder_list = new List<Ladder>();
 		collider = GetComponent<BoxCollider>();
 		colliderScale = transform.localScale.x;
 
@@ -50,6 +60,9 @@ public class PlayerPhysics : MonoBehaviour {
 			float x = (p.x + c.x - s.x/2) + s.x/(divX - 1) * i;
 			float y = p.y + c.y + s.y/2 * dir;
 
+			// Quick solution for unexpected issue
+			if(flipX) x -= 0.3f;
+
 			ray = new Ray(new Vector2(x,y), new Vector2(0, dir));
 			Debug.DrawRay(ray.origin,ray.direction);
 
@@ -68,6 +81,9 @@ public class PlayerPhysics : MonoBehaviour {
 				float x = p.x + c.x + s.x/2 * dir;
 				float y = p.y + c.y - s.y/2 + s.y/(divY-1) * i;
 
+				// Quick solution for unexpected issue
+				if(flipX) x -= 0.3f;
+
 				ray = new Ray(new Vector2(x,y), new Vector2(dir, 0));
 				Debug.DrawRay(ray.origin,ray.direction);
 
@@ -84,15 +100,27 @@ public class PlayerPhysics : MonoBehaviour {
 		if(!grounded && !stopped){
 			Vector3 pdir = new Vector3(deltaX, deltaY);
 			Vector3 o = new Vector3(p.x + c.x + s.x/2 * Mathf.Sign (deltaX), p.y + c.y + s.y/2 * Mathf.Sign (deltaY));
+
+			// Quick solution for unexpected issue
+			if(flipX) o.x -= 0.3f;
+
 			ray = new Ray(o, pdir.normalized);
 
+			Debug.DrawRay(o, ray.direction);
 			if(Physics.Raycast(ray, Mathf.Sqrt(deltaX * deltaX + deltaY * deltaY), collisionMask)) {
 				grounded = true;
 				deltaY = 0;
 			}
 		}
 
+		if(climbing && deltaY != 0 && ladder_list.Count == 1) {
+			foreach(Ladder l in ladder_list) {
+				if(l.leader && l.transform.position.y + 3 < transform.position.y)
+					deltaY = Mathf.Min (0, deltaY);
+			}
+		}
 		Vector2 value = new Vector2(deltaX, deltaY);
+		debug_value = ladder_list.Count;
 		transform.Translate(value, Space.World);
 	}
 
@@ -102,5 +130,48 @@ public class PlayerPhysics : MonoBehaviour {
 		
 		s = size * colliderScale;
 		c = centre * colliderScale;
+	}
+
+	public void Grab(){
+		Vector2 p = transform.position;
+		p.x = 0;
+		transform.position = p;
+		climbing = true;
+	}
+
+	public bool canGrab(){
+		if(!canClimb)
+			return false;
+		if(ladder_list.Count > 1)
+			return true;
+		foreach(Ladder l in ladder_list) {
+			if(l.leader && l.transform.position.y + 3 < transform.position.y)
+				return false;
+		}
+		return true;
+	}
+
+	public bool atEdge(){
+		if(ladder_list.Count > 1)
+			return false;
+		foreach(Ladder l in ladder_list) {
+			if(l.leader && l.transform.position.y + 1 < transform.position.y)
+				return true;
+		}
+		return false;
+	}
+
+	void OnTriggerEnter(Collider c){
+		if(c.gameObject.tag == "Ladder") {
+			canClimb = true;
+			ladder_list.Add (c.GetComponent<Ladder>());
+		}
+	}
+
+	void OnTriggerExit(Collider c){
+		if(c.gameObject.tag == "Ladder") {
+			canClimb = false;
+			ladder_list.Remove(c.GetComponent<Ladder>());
+		}
 	}
 }

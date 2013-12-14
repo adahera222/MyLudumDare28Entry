@@ -4,28 +4,28 @@ using System.Collections;
 public class GameScene : Scene {
 
 	MOVE_TYPE[] pattern_type = new MOVE_TYPE[10]{
-		MOVE_TYPE.JUSTRISE,
-		MOVE_TYPE.JUSTRISE,
-		MOVE_TYPE.JUSTRISE,
-		MOVE_TYPE.JUSTRISE,
-		MOVE_TYPE.JUSTRISE,
-		MOVE_TYPE.JUSTRISE,
-		MOVE_TYPE.JUSTRISE,
-		MOVE_TYPE.JUSTRISE,
-		MOVE_TYPE.JUSTRISE,
-		MOVE_TYPE.JUSTRISE
+		MOVE_TYPE.BULLETHELL,
+		MOVE_TYPE.BULLETHELL,
+		MOVE_TYPE.BULLETHELL,
+		MOVE_TYPE.BULLETHELL,
+		MOVE_TYPE.BULLETHELL,
+		MOVE_TYPE.BULLETHELL,
+		MOVE_TYPE.BULLETHELL,
+		MOVE_TYPE.BULLETHELL,
+		MOVE_TYPE.BULLETHELL,
+		MOVE_TYPE.BULLETHELL,
 	};
 	float[] pattern_delay = new float[10]{
-		1.0f,
-		3.0f,
-		3.0f,
-		3.0f,
-		2.0f,
-		2.0f,
-		2.0f,
-		2.0f,
-		2.0f,
-		2.0f,
+		5.0f,
+		5.0f,
+		5.0f,
+		5.0f,
+		5.0f,
+		5.0f,
+		5.0f,
+		5.0f,
+		5.0f,
+		5.0f,
 	};
 
 	private CameraScript cam;

@@ -62,4 +62,6 @@ public class CameraScript : MonoBehaviour {
 		leftPillar.SetActive(true);
 		rightPillar.SetActive(true);
 	}
+
+
 }

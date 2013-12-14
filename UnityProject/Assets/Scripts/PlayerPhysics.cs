@@ -31,6 +31,10 @@ public class PlayerPhysics : MonoBehaviour {
 	public bool canClimb;
 	[HideInInspector]
 	public bool climbing;
+	[HideInInspector]
+	public bool isDead;
+	[HideInInspector]
+	public bool invincible;
 
 	private List<Ladder> ladder_list;
 
@@ -47,7 +51,11 @@ public class PlayerPhysics : MonoBehaviour {
 		originalCentre = collider.center;
 		SetCollider(originalSize,originalCentre);
 	}
-	
+
+	public void Restart() {
+		isDead = false;
+	}
+
 	public void Move(Vector2 moveAmount, float moveDirX){
 		float deltaY = moveAmount.y;
 		float deltaX = moveAmount.x;
@@ -165,6 +173,11 @@ public class PlayerPhysics : MonoBehaviour {
 		if(c.gameObject.tag == "Ladder") {
 			canClimb = true;
 			ladder_list.Add (c.GetComponent<Ladder>());
+		} else if(!invincible && c.gameObject.tag == "Death") {
+			isDead = true;
+		} else if(c.gameObject.tag == "FallDeath") {
+			isDead = true;
+			invincible = false;
 		}
 	}
 

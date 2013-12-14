@@ -61,6 +61,7 @@ public class LadderScript : MonoBehaviour {
 	}
 
 	public void Destroy(){
+
 	}
 
 	void SetMinimum(){

@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour {
 	private Vector2 delta;
 	private float moveDirX;
 	private float moveDirY;
+	
+	private float blinkCounter;
 
 	// States
 	[HideInInspector]
@@ -33,6 +35,7 @@ public class PlayerController : MonoBehaviour {
 
 	private PlayerPhysics playerPhysics;
 	tk2dSpriteAnimator animator;
+	tk2dSprite sprite;
 
 	private static PlayerController instance;
 	
@@ -55,8 +58,14 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		playerPhysics = GetComponent<PlayerPhysics>();
 		animator = GetComponent<tk2dSpriteAnimator>();
+		sprite = GetComponent<tk2dSprite>();
 	}
-	
+
+	public void Restart() {
+		playerPhysics.Restart();
+		canControl = true;
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if(playerPhysics.stopped){
@@ -71,7 +80,7 @@ public class PlayerController : MonoBehaviour {
 		if(upheld && Input.GetAxisRaw("Vertical") == 0)
 			upheld = false;
 
-		if(Input.GetButtonDown("Jump")) {
+		if(canControl && Input.GetButtonDown("Jump")) {
 			if(!climbing && playerPhysics.grounded) {
 				delta.y = jumpHeight;
 			} else if(climbing) {
@@ -143,5 +152,51 @@ public class PlayerController : MonoBehaviour {
 			n += a * Time.deltaTime * dir;
 			return (dir == Mathf.Sign(target-n))? n : target;
 		}
+	}
+	public bool IsDead {
+		get {return playerPhysics.isDead;}
+		set {playerPhysics.isDead = value;}
+	}
+
+	public void Kill(){
+		canControl = false;
+		climbing = false;
+		playerPhysics.climbing = false;
+	}
+
+	public void Respawn(Vector3 pos) {
+		canControl = true;
+		playerPhysics.isDead = false;
+		transform.position = new Vector3(0, pos.y, 0);
+		climbing = true;
+		currentSpeedX = 0;
+		currentSpeedY = 0;
+		playerPhysics.Grab();
+		StartCoroutine(Invincible());
+	}
+
+	IEnumerator Invincible(){
+		playerPhysics.invincible = true;
+		StartCoroutine(Blink());
+		yield return new WaitForSeconds(3.0f);
+		playerPhysics.invincible = false;
+	}
+
+	IEnumerator Blink(){
+		Color col;
+		while(playerPhysics.invincible){
+			blinkCounter += Time.deltaTime;
+			if(blinkCounter > 0.15f){
+				col = sprite.color;
+				col.a = col.a == 0 ? 1.0f : 0.0f;
+				sprite.color = col;
+				blinkCounter = 0.0f;
+			}
+			yield return null;
+		}
+		col = sprite.color;
+		col.a = 1.0f;
+		sprite.color = col;
+		yield return null;
 	}
 }

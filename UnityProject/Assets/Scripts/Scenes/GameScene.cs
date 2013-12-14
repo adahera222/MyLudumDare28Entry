@@ -2,10 +2,36 @@
 using System.Collections;
 
 public class GameScene : Scene {
-	
+
+	MOVE_TYPE[] pattern_type = new MOVE_TYPE[10]{
+		MOVE_TYPE.JUSTRISE,
+		MOVE_TYPE.JUSTRISE,
+		MOVE_TYPE.JUSTRISE,
+		MOVE_TYPE.JUSTRISE,
+		MOVE_TYPE.JUSTRISE,
+		MOVE_TYPE.JUSTRISE,
+		MOVE_TYPE.JUSTRISE,
+		MOVE_TYPE.JUSTRISE,
+		MOVE_TYPE.JUSTRISE,
+		MOVE_TYPE.JUSTRISE
+	};
+	float[] pattern_delay = new float[10]{
+		1.0f,
+		3.0f,
+		3.0f,
+		3.0f,
+		2.0f,
+		2.0f,
+		2.0f,
+		2.0f,
+		2.0f,
+		2.0f,
+	};
+
 	private CameraScript cam;
 	private LadderScript ladder;
 	private PlayerController player;
+	private BossScript boss;
 
 	private int lives = 3;
 	private bool isDead;
@@ -18,6 +44,7 @@ public class GameScene : Scene {
 		cam = CameraScript.Instance;
 		ladder = LadderScript.Instance;
 		player = PlayerController.Instance;
+		boss = BossScript.Instance;
 
 		cam.transform.position = new Vector3(0.0f, 0.0f, -10.0f);
 		player.transform.position = new Vector3(-6.0f, -1f, 0.0f);
@@ -48,6 +75,7 @@ public class GameScene : Scene {
 		lives = 3;
 		player.Restart();
 		cam.Restart();
+		boss.Restart();
 	}
 
 	// Update is called once per frame
@@ -60,9 +88,10 @@ public class GameScene : Scene {
 		}
 
 		// Mark the beginning of the boss
-		if(!bossStarted && cam.transform.position.y > 20) {
+		if(!bossStarted && cam.transform.position.y > 25) {
 			bossStarted = true;
 			cam.moveCamera(-15.0f);
+			StartCoroutine(BossPattern());
 		}
 
 		// Death check
@@ -74,6 +103,15 @@ public class GameScene : Scene {
 		}
 
 
+	}
+
+	IEnumerator BossPattern(){
+		boss.Activate();
+		for(var i=0; i<pattern_type.Length; i+=1){
+			boss.MakeMove(pattern_type[i], cam.transform.position.y);
+			yield return new WaitForSeconds(pattern_delay[i]);
+		}
+		yield return null;
 	}
 
 	IEnumerator HandleDeath(){

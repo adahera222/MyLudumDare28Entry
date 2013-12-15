@@ -54,6 +54,7 @@ public class PlayerPhysics : MonoBehaviour {
 
 	public void Restart() {
 		isDead = false;
+		climbing = false;
 	}
 
 	public void Move(Vector2 moveAmount, float moveDirX){
@@ -142,8 +143,15 @@ public class PlayerPhysics : MonoBehaviour {
 
 	public void Grab(){
 		Vector2 p = transform.position;
-		p.x = 0;
+		float x = 0;
+		foreach(Ladder l in ladder_list)
+			x = l.transform.position.x;
+		p.x = x;
 		transform.position = p;
+		climbing = true;
+	}
+
+	public void Climb(){
 		climbing = true;
 	}
 
@@ -178,6 +186,8 @@ public class PlayerPhysics : MonoBehaviour {
 		} else if(c.gameObject.tag == "FallDeath") {
 			isDead = true;
 			invincible = false;
+		} else if(c.gameObject.tag == "GoodEnding") {
+			GameEngine.Instance.GoodEnding = true;
 		}
 	}
 

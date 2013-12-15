@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class Scene : MonoBehaviour {
+	protected bool _isDone;
+	public bool isDone { get { return _isDone; } }
 
 	public virtual void Awake ()
 	{
@@ -15,7 +17,7 @@ public class Scene : MonoBehaviour {
 	
 	public virtual void Initialize()
 	{
-		
+		_isDone = false;
 	}
 	
 	public virtual void Clean()
@@ -31,5 +33,15 @@ public class Scene : MonoBehaviour {
 	public virtual void Unpause()
 	{
 		
+	}
+
+	public virtual SCENE_TYPE Next()
+	{
+		return SCENE_TYPE.OPENING;
+	}
+
+	public void SceneFinished()
+	{
+		_isDone = true;
 	}
 }

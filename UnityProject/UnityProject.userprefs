@@ -1,14 +1,16 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scenes\GameScene.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scenes\LastScene.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameEngine.cs" Line="12" Column="38" />
-      <File FileName="Assets\Scripts\PlayerController.cs" Line="154" Column="4" />
-      <File FileName="Assets\Scripts\Scenes\GameScene.cs" Line="99" Column="18" />
-      <File FileName="Assets\Scripts\CameraScript.cs" Line="55" Column="3" />
-      <File FileName="Assets\Scripts\BossScript.cs" Line="84" Column="22" />
-      <File FileName="Assets\Scripts\Entities\Projectile.cs" Line="25" Column="8" />
-      <File FileName="Assets\Scripts\LadderScript.cs" Line="45" Column="5" />
+      <File FileName="Assets\Scripts\Entities\Projectile.cs" Line="63" Column="3" />
+      <File FileName="Assets\Scripts\BossScript.cs" Line="126" Column="22" />
+      <File FileName="Assets\Scripts\Scenes\GameScene.cs" Line="109" Column="3" />
+      <File FileName="Assets\Scripts\CameraScript.cs" Line="24" Column="2" />
+      <File FileName="Assets\Scripts\Scenes\Scene.cs" Line="39" Column="3" />
+      <File FileName="Assets\Scripts\GameEngine.cs" Line="82" Column="34" />
+      <File FileName="Assets\Scripts\Scenes\LastScene.cs" Line="48" Column="26" />
+      <File FileName="Assets\Scripts\PlayerPhysics.cs" Line="158" Column="24" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="191" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

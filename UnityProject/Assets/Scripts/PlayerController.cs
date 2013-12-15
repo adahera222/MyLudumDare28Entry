@@ -62,8 +62,17 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void Restart() {
+		Color col = sprite.color;
+		col.a = 1.0f;
+		sprite.color = col;
 		playerPhysics.Restart();
 		canControl = true;
+		climbing = false;
+	}
+
+	public void AutoMove(float x, float y){
+		moveDirX = x;
+		moveDirY = y;
 	}
 
 	// Update is called once per frame
@@ -90,12 +99,10 @@ public class PlayerController : MonoBehaviour {
 				playerPhysics.climbing = false;
 			}
 		}
-		moveDirX = Input.GetAxisRaw("Horizontal");
-		moveDirY = Input.GetAxisRaw("Vertical");
 
-		if(!canControl) {
-			moveDirX = 0;
-			moveDirY = 0;
+		if(canControl) {
+			moveDirX = Input.GetAxisRaw("Horizontal");
+			moveDirY = Input.GetAxisRaw("Vertical");
 		}
 
 		if(moveDirY > 0 && !climbing && playerPhysics.canGrab() && !upheld) {
@@ -160,6 +167,8 @@ public class PlayerController : MonoBehaviour {
 
 	public void Kill(){
 		canControl = false;
+		moveDirX = 0;
+		moveDirY = 0;
 		climbing = false;
 		playerPhysics.climbing = false;
 	}
@@ -173,6 +182,13 @@ public class PlayerController : MonoBehaviour {
 		currentSpeedY = 0;
 		playerPhysics.Grab();
 		StartCoroutine(Invincible());
+	}
+
+	public void Grab(){
+		climbing = true;
+		currentSpeedX = 0;
+		currentSpeedY = 0;
+		playerPhysics.Climb();
 	}
 
 	IEnumerator Invincible(){

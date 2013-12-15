@@ -8,10 +8,22 @@ public class CameraScript : MonoBehaviour {
 	public float riseSpeed = 1;
 	public tk2dSprite deathBox;
 	public Transform respawnBox;
+	public Transform player;
 	public GameObject leftPillar;
 	public GameObject rightPillar;
+	public tk2dSprite fade;
+
+	private float shake_decay;
+	private float shake_intensity;
+	private Vector3 originalPosition;
+	private Vector3 vel = Vector3.zero;
+
 	[HideInInspector]
 	public bool rising;
+	[HideInInspector]
+	public bool shaking;
+	[HideInInspector]
+	public bool chasing;
 
 	private static CameraScript instance;
 
@@ -28,6 +40,7 @@ public class CameraScript : MonoBehaviour {
 
 	void Awake() {
 		instance = this;
+		fade.gameObject.SetActive(true);
 	}
 
 	// Use this for initialization
@@ -37,6 +50,7 @@ public class CameraScript : MonoBehaviour {
 	}
 
 	public void Restart() {
+		rising = false;
 		leftPillar.SetActive(false);
 		rightPillar.SetActive(false);
 	}
@@ -47,6 +61,24 @@ public class CameraScript : MonoBehaviour {
 			Vector3 p = transform.position;
 			p.y += riseSpeed * Time.deltaTime;
 			transform.position = p;
+		}
+
+		if(shaking){
+			if(shake_intensity>0){
+				Vector3 pos = originalPosition + Random.insideUnitSphere * shake_intensity;
+				pos.z = originalPosition.z;
+				transform.position = pos;
+				shake_intensity -= shake_decay;
+			} else {
+				shaking = false;
+				transform.position = originalPosition;
+			}
+		}
+
+		if(chasing) {
+			Vector3 pos = player.position;
+			pos.z = transform.position.z;
+			transform.position = Vector3.SmoothDamp(transform.position, pos, ref vel, 0.2f);
 		}
 	}
 
@@ -63,5 +95,33 @@ public class CameraScript : MonoBehaviour {
 		rightPillar.SetActive(true);
 	}
 
+	public void Shake(){
+		originalPosition = transform.position;
+		shake_intensity = .3f;
+		shake_decay = 0.002f;
+		shaking = true;
+	}
 
+	public void Fade(Color end, float duration){
+		StartCoroutine(DoFade(end, duration));
+	}
+
+	public void FadeClear(float duration){
+		Color color = fade.color;
+		color.a = 0;
+		StartCoroutine(DoFade(color, duration));
+	}
+
+	public void FadeDark(float duration){
+		Color color = fade.color;
+		color.a = 1;
+		StartCoroutine(DoFade(color, duration));
+	}
+
+	IEnumerator DoFade(Color end, float d){
+		Tweener twn = HOTween.To (fade, d, new TweenParms().Prop("color", end));
+		while(!twn.isComplete){
+			yield return null;
+		}
+	}
 }

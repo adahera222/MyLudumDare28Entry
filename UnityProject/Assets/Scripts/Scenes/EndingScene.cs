@@ -1,15 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EndingScene : MonoBehaviour {
+public class EndingScene : Scene {
+	public override void Initialize()
+	{
+		base.Initialize();
+		if(GameEngine.Instance.TryAgain) {
+			_isDone = true;
+			next = SCENE_TYPE.LAST;
+		}
+	}
+	SCENE_TYPE next = SCENE_TYPE.ENDING;
+	public override SCENE_TYPE Next()
+	{
+		return next;
+	}
 
-	// Use this for initialization
-	void Start () {
-	
+	public override void Clean()
+	{
+		base.Clean();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	public override void UpdateScene () {
+		base.UpdateScene();
 	}
 }

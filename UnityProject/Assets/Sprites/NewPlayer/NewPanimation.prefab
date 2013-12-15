@@ -414,6 +414,65 @@ MonoBehaviour:
     fps: 30
     loopStart: 0
     wrapMode: 0
+  - name: she_run
+    frames:
+    - spriteCollection: {fileID: 11400000, guid: 9c83606613fdb094d919a5054c22179b,
+        type: 2}
+      spriteId: 34
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+    - spriteCollection: {fileID: 11400000, guid: 9c83606613fdb094d919a5054c22179b,
+        type: 2}
+      spriteId: 36
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+    - spriteCollection: {fileID: 11400000, guid: 9c83606613fdb094d919a5054c22179b,
+        type: 2}
+      spriteId: 39
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+    - spriteCollection: {fileID: 11400000, guid: 9c83606613fdb094d919a5054c22179b,
+        type: 2}
+      spriteId: 37
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+    - spriteCollection: {fileID: 11400000, guid: 9c83606613fdb094d919a5054c22179b,
+        type: 2}
+      spriteId: 40
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+    - spriteCollection: {fileID: 11400000, guid: 9c83606613fdb094d919a5054c22179b,
+        type: 2}
+      spriteId: 38
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+    fps: 10
+    loopStart: 0
+    wrapMode: 0
+  - name: she_hurt
+    frames:
+    - spriteCollection: {fileID: 11400000, guid: 9c83606613fdb094d919a5054c22179b,
+        type: 2}
+      spriteId: 35
+      triggerEvent: 0
+      eventInfo: 
+      eventInt: 0
+      eventFloat: 0
+    fps: 30
+    loopStart: 0
+    wrapMode: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

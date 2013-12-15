@@ -20,10 +20,12 @@ public class Projectile : MonoBehaviour {
 
 	public void Aim(float aim, float delay, Transform player){
 		aimTimer = 0;
+		AudioManager.Instance.playSound(Sfx.LOCK, player.position);
 		StartCoroutine(AimAndDisappear(aim, delay, player));
 	}
 
 	public void Laser(Vector3 pos, Projectile exp){
+		AudioManager.Instance.playSound(Sfx.LASER, transform.position);
 		StartCoroutine(LaserAndExplosion(pos, exp));
 	}
 
@@ -41,6 +43,7 @@ public class Projectile : MonoBehaviour {
 			aimTimer+= Time.deltaTime;
 			yield return null;
 		}
+
 		Vector3 pos = player.position;
 		pos.z = -0.1f;
 		while(aimTimer < aim + delay){
@@ -52,7 +55,7 @@ public class Projectile : MonoBehaviour {
 	}
 
 	IEnumerator LaserAndExplosion(Vector3 pos, Projectile exp){
-		Tweener twn = HOTween.To (transform, 0.4f, new TweenParms().Prop ("position", pos));
+		Tweener twn = HOTween.To (transform, 0.4f, new TweenParms().Prop ("position", pos).Ease(EaseType.Linear));
 		while(!twn.isComplete) {
 			yield return null;
 		}
@@ -65,6 +68,7 @@ public class Projectile : MonoBehaviour {
 	IEnumerator Explosion(){
 		tk2dSpriteAnimator anim = GetComponent<tk2dSpriteAnimator>();
 		anim.Play("Explosion");
+		AudioManager.Instance.playSound(Sfx.EXP, transform.position);
 		while(anim.IsPlaying("Explosion")){
 			yield return null;
 		}

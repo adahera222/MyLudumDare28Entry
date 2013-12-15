@@ -24,6 +24,7 @@ public class BossScript : MonoBehaviour {
 	Projectile _Exp_Prefab;
 	Projectile _Rock_Prefab;
 	Projectile _Rocket_Prefab;
+	Projectile _Bigrock_Prefab;
 
 	GameObject _Biglaser_Prefab;
 	GameObject _Bigexp_Prefab;
@@ -43,7 +44,8 @@ public class BossScript : MonoBehaviour {
 	public tk2dSprite arrow_left;
 	public tk2dSprite arrow_mid;
 	public tk2dSprite arrow_right;
-	
+	public tk2dSprite arrow_enemy;
+
 	public tk2dSprite rocket_exp;
 
 	private bool rising;
@@ -70,7 +72,7 @@ public class BossScript : MonoBehaviour {
 		_Exp_Prefab = (Resources.Load ("Prefabs/Explosion") as GameObject).GetComponent<Projectile>();
 		_Rock_Prefab = (Resources.Load ("Prefabs/Rock") as GameObject).GetComponent<Projectile>();
 		_Rocket_Prefab = (Resources.Load ("Prefabs/Rocket") as GameObject).GetComponent<Projectile>();
-
+		_Bigrock_Prefab = (Resources.Load ("Prefabs/BigRock") as GameObject).GetComponent<Projectile>();
 		_Biglaser_Prefab = (Resources.Load ("Prefabs/Biglaser") as GameObject);
 		_Bigexp_Prefab = (Resources.Load ("Prefabs/BigExp") as GameObject);
 	}
@@ -97,13 +99,15 @@ public class BossScript : MonoBehaviour {
 	IEnumerator Finale(Vector3 target){
 		GameObject pj = Instantiate(_Biglaser_Prefab, new Vector3(laser_eye.position.x, laser_eye.position.y, 0), Quaternion.identity) as GameObject;
 		pj.SetActive(true);
-		Tweener twn = HOTween.To (pj.transform, 0.3f, new TweenParms().Prop ("position", target));
+		HOTween.To (pj.transform, 0.3f, new TweenParms().Prop ("position", target));
+		AudioManager.Instance.playSound(Sfx.LASER, laser_eye.position);
 		yield return new WaitForSeconds(0.3f);
 		Destroy(pj, 0.1f);
 		GameObject exp = Instantiate(_Bigexp_Prefab, new Vector3(target.x, target.y, 0), Quaternion.identity) as GameObject;
 		exp.SetActive(true);
 		tk2dSpriteAnimator anim = exp.GetComponent<tk2dSpriteAnimator>();
 		anim.Play ("Explosion");
+		AudioManager.Instance.playSound(Sfx.EXP, target);
 		while(anim.IsPlaying("Explosion")){
 			yield return null;
 		}
@@ -153,14 +157,17 @@ public class BossScript : MonoBehaviour {
 		if(level == 0){
 			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(15f, 20f)));
 			yield return new WaitForSeconds(2.0f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.25f);
 			Shoot(20f, 0.25f);
 			Shoot(-20f, 0.25f);
 			yield return new WaitForSeconds(0.5f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.25f);
 			Shoot(20f, 0.25f);
 			Shoot(-20f, 0.25f);
 			yield return new WaitForSeconds(0.5f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.25f);
 			Shoot(20f, 0.25f);
 			Shoot(-20f, 0.25f);
@@ -168,18 +175,35 @@ public class BossScript : MonoBehaviour {
 		} else if(level == 1){
 			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(15f, 20f)));
 			yield return new WaitForSeconds(1.0f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.30f);
 			Shoot(20f, 0.30f);
 			Shoot(40f, 0.30f);
 			Shoot(-20f, 0.30f);
 			Shoot(-40f, 0.30f);
 			yield return new WaitForSeconds(0.5f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.30f);
 			Shoot(20f, 0.30f);
 			Shoot(40f, 0.30f);
 			Shoot(-20f, 0.30f);
 			Shoot(-40f, 0.30f);
 			yield return new WaitForSeconds(0.5f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
+			Shoot(0f, 0.30f);
+			Shoot(20f, 0.30f);
+			Shoot(40f, 0.30f);
+			Shoot(-20f, 0.30f);
+			Shoot(-40f, 0.30f);
+			yield return new WaitForSeconds(0.5f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
+			Shoot(0f, 0.30f);
+			Shoot(20f, 0.30f);
+			Shoot(40f, 0.30f);
+			Shoot(-20f, 0.30f);
+			Shoot(-40f, 0.30f);
+			yield return new WaitForSeconds(0.5f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.30f);
 			Shoot(20f, 0.30f);
 			Shoot(40f, 0.30f);
@@ -189,19 +213,23 @@ public class BossScript : MonoBehaviour {
 		} else {
 			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(15f, 20f)));
 			yield return new WaitForSeconds(0.5f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.35f);
 			Shoot(18f, 0.35f);
 			Shoot(-18f, 0.35f);
 			yield return new WaitForSeconds(0.4f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.35f);
 			Shoot(18f, 0.35f);
 			Shoot(-18f, 0.35f);
 			yield return new WaitForSeconds(0.4f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.35f);
 			Shoot(18f, 0.35f);
 			Shoot(-18f, 0.35f);
 
 			yield return new WaitForSeconds(0.4f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.35f);
 			Shoot(18f, 0.35f);
 			Shoot(36f, 0.35f);
@@ -209,6 +237,7 @@ public class BossScript : MonoBehaviour {
 			Shoot(-36f, 0.35f);
 
 			yield return new WaitForSeconds(0.4f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.35f);
 			Shoot(18f, 0.35f);
 			Shoot(36f, 0.35f);
@@ -216,6 +245,7 @@ public class BossScript : MonoBehaviour {
 			Shoot(-36f, 0.35f);
 
 			yield return new WaitForSeconds(0.4f);
+			AudioManager.Instance.playSound(Sfx.BULLET, bullet_nozzle.transform.position);
 			Shoot(0f, 0.35f);
 			Shoot(18f, 0.35f);
 			Shoot(36f, 0.35f);
@@ -228,12 +258,6 @@ public class BossScript : MonoBehaviour {
 
 	IEnumerator RiseAndLaser(int level){
 		if(level == 0){
-			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(10f, 20f)));
-			Transform t = Aim (1.5f, 0.3f);
-			yield return new WaitForSeconds(1.8f);
-			Laser (t.position);
-			yield return new WaitForSeconds(2.0f);
-		} else if(level == 1){
 			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(15f, 20f)));
 			Transform t = Aim (0.8f, 0.2f);
 			yield return new WaitForSeconds(1.0f);
@@ -245,7 +269,7 @@ public class BossScript : MonoBehaviour {
 			yield return new WaitForSeconds(1.0f);
 			Laser (t.position);
 			yield return new WaitForSeconds(2.0f);
-		} else {
+		} else if(level == 1){
 			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(15f, 20f)));
 			Transform t = Aim (0.5f, 0.2f);
 			yield return new WaitForSeconds(0.7f);
@@ -261,6 +285,30 @@ public class BossScript : MonoBehaviour {
 			Laser (t.position);
 			t = Aim (0.5f, 0.2f);
 			yield return new WaitForSeconds(0.7f);
+			Laser (t.position);
+			yield return new WaitForSeconds(2.0f);
+		} else {
+			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(15f, 20f)));
+			Transform t = Aim (0.5f, 0.2f);
+			yield return new WaitForSeconds(0.6f);
+			Laser (t.position);
+			t = Aim (0.4f, 0.2f);
+			yield return new WaitForSeconds(0.6f);
+			Laser (t.position);
+			t = Aim (0.4f, 0.2f);
+			yield return new WaitForSeconds(0.6f);
+			Laser (t.position);
+			t = Aim (0.4f, 0.2f);
+			yield return new WaitForSeconds(0.6f);
+			Laser (t.position);
+			t = Aim (0.4f, 0.2f);
+			yield return new WaitForSeconds(0.6f);
+			Laser (t.position);
+			t = Aim (0.4f, 0.2f);
+			yield return new WaitForSeconds(0.6f);
+			Laser (t.position);
+			t = Aim (0.4f, 0.2f);
+			yield return new WaitForSeconds(0.6f);
 			Laser (t.position);
 			yield return new WaitForSeconds(2.0f);
 		}
@@ -307,6 +355,7 @@ public class BossScript : MonoBehaviour {
 		}
 		yield return new WaitForSeconds(1f);
 		cam.Shake();
+		AudioManager.Instance.playSound(Sfx.EARTHQUAKE, Camera.main.transform.position);
 		StartCoroutine(Rise(cam.transform.position.y, 10));
 		yield return new WaitForSeconds(1f);
 		yield return StartCoroutine(Warning(1.0f, 3));
@@ -321,13 +370,27 @@ public class BossScript : MonoBehaviour {
 		yield return new WaitForSeconds(0.5f);
 		yield return StartCoroutine(Warning(1.0f, 4));
 		FallRock(1);
+		yield return new WaitForSeconds(0.5f);
+		yield return StartCoroutine(Warning(1.0f, 5));
+		FallRock(2);
+		yield return new WaitForSeconds(0.6f);
+		StartCoroutine(Fall());
 		makingMove = false;
+	}
+
+	IEnumerator Fall(){
+		AudioManager.Instance.playSound(Sfx.HEADBUTT, Camera.main.transform.position);
+		Tweener twn = HOTween.To (Boss.transform, 1.0f, new TweenParms().Prop ("position", new Vector3(0, -15, 0), true));
+		while(!twn.isComplete) {
+			yield return null;
+		}
 	}
 
 	IEnumerator Rise(float py, float amount){
 		rising = true;
 		float deltay = py - Boss.transform.position.y + amount;
 		StartCoroutine(Thrust());
+		AudioManager.Instance.playSound(Sfx.ENGINE, Boss.transform.position);
 		Tweener twn = HOTween.To (Boss.transform, 2.0f, new TweenParms().Prop ("position", new Vector3(0, deltay, 0), true));
 		while(!twn.isComplete) {
 			yield return null;
@@ -369,6 +432,7 @@ public class BossScript : MonoBehaviour {
 
 	float rockettimer;
 	IEnumerator Rocket(){
+		AudioManager.Instance.playSound(Sfx.LAUNCH, Boss.transform.position);
 		Color col = rocket_exp.color;
 		col.a = 1f;
 		rocket_exp.color = col;
@@ -398,6 +462,8 @@ public class BossScript : MonoBehaviour {
 					col = arrow_left.color;
 				else if(type == 2)
 					col = arrow_right.color;
+				else if(type == 5)
+					col = arrow_enemy.color;
 				else
 					col = arrow_mid.color;
 				//
@@ -414,6 +480,8 @@ public class BossScript : MonoBehaviour {
 				} else if(type == 4){
 					arrow_mid.color = col;
 					arrow_right.color = col;
+				} else if(type == 5){
+					arrow_enemy.color = col;
 				}
 				blinkTimer = 0;
 			}
@@ -424,6 +492,7 @@ public class BossScript : MonoBehaviour {
 		arrow_mid.color = col;
 		arrow_left.color = col;
 		arrow_right.color = col;
+		arrow_enemy.color = col;
 		warnTimer = 0;
 		blinkTimer = 0;
 	}
@@ -439,17 +508,29 @@ public class BossScript : MonoBehaviour {
 		Projectile pj = Instantiate(_Rocket_Prefab, pos, Quaternion.identity) as Projectile;
 		pj.gameObject.SetActive(true);
 		pj.Fire(180, 0.5f, 3);
+		AudioManager.Instance.playSound(Sfx.ROCKET, pj.transform.position);
 	}
 
 	private void FallRock(int type){
 		Vector3 pos;
-		if(type == 0)
-			pos = new Vector3(arrow_mid.transform.position.x - 1.5f, arrow_mid.transform.position.y + 5, 0);
-		else
-			pos = new Vector3(arrow_mid.transform.position.x + 1.5f, arrow_mid.transform.position.y + 5, 0);
-		Projectile pj = Instantiate(_Rock_Prefab, pos, Quaternion.identity) as Projectile;
-		pj.gameObject.SetActive(true);
-		pj.Fire(180, 0.5f, 3);
+		if(type == 2){
+			pos = new Vector3(arrow_enemy.transform.position.x, arrow_enemy.transform.position.y + 5, 0);
+			Projectile pj = Instantiate(_Bigrock_Prefab, pos, Quaternion.identity) as Projectile;
+			pj.gameObject.SetActive(true);
+			pj.Fire(180, 0.5f, 3);
+			AudioManager.Instance.playSound(Sfx.ROCKFALL, pj.transform.position);
+		}
+		else{
+			if(type == 0)
+				pos = new Vector3(arrow_mid.transform.position.x - 1.5f, arrow_mid.transform.position.y + 5, 0);
+			else
+				pos = new Vector3(arrow_mid.transform.position.x + 1.5f, arrow_mid.transform.position.y + 5, 0);
+
+			Projectile pj = Instantiate(_Rock_Prefab, pos, Quaternion.identity) as Projectile;
+			pj.gameObject.SetActive(true);
+			pj.Fire(180, 0.5f, 3);
+			AudioManager.Instance.playSound(Sfx.ROCKFALL, pj.transform.position);
+		}
 	}
 
 	private float GetAngle(){

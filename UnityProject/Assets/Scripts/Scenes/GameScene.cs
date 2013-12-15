@@ -24,7 +24,7 @@ public class GameScene : Scene {
 	private bool isDead;
 	private bool started;
 	private bool bossStarted;
-
+	private AudioSource source;
 	public override void Initialize()
 	{
 		base.Initialize();
@@ -34,7 +34,7 @@ public class GameScene : Scene {
 		boss = BossScript.Instance;
 
 		cam.transform.position = new Vector3(0.0f, 0.0f, -10.0f);
-		player.transform.position = new Vector3(-6.0f, -6.845f, 0.0f);
+		player.transform.position = new Vector3(-7.611201f, -6.845f, 0.0f);
 
 		started = false;
 		cam.rising = false;
@@ -42,8 +42,13 @@ public class GameScene : Scene {
 		bossStarted = false;
 		ladder.Initialize(cam.deathBox.transform.position);
 		lives = 3;
-
+		player.isAlone = false;
+		player.canControl = true;
+		player.autoMove = false;
 		cam.FadeClear(1.0f);
+		GameEngine.Instance.invisibleWall.SetActive(true);
+
+		source = Camera.main.GetComponent<AudioSource>();
 	}
 	
 	public override void Clean()
@@ -82,6 +87,7 @@ public class GameScene : Scene {
 		if(!started && player.climbing){
 			started = true;
 			cam.rising = true;
+			source.Play ();
 		}
 
 		// Mark the beginning of the boss
@@ -119,6 +125,7 @@ public class GameScene : Scene {
 		player.AutoMove(0, 0.5f);
 		yield return new WaitForSeconds(2.0f);
 		player.AutoMove(0, 0);
+		source.Stop ();
 		_isDone = true;
 		yield return null;
 	}
@@ -129,6 +136,7 @@ public class GameScene : Scene {
 			player.Respawn(cam.respawnBox.position);
 			isDead = false;
 		} else {
+			source.Stop ();
 			cam.rising = false;
 			cam.FadeDark(2.0f);
 			yield return new WaitForSeconds(2.0f);

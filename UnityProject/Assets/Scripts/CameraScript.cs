@@ -24,6 +24,8 @@ public class CameraScript : MonoBehaviour {
 	public bool shaking;
 	[HideInInspector]
 	public bool chasing;
+	[HideInInspector]
+	public bool chasingX;
 
 	private static CameraScript instance;
 
@@ -83,10 +85,21 @@ public class CameraScript : MonoBehaviour {
 			pos.z = transform.position.z;
 			transform.position = Vector3.SmoothDamp(transform.position, pos, ref vel, 0.2f);
 		}
+
+		if(chasingX){
+			Vector3 pos = player.position;
+			pos.y = transform.position.y;
+			pos.z = transform.position.z;
+			transform.position = Vector3.SmoothDamp(transform.position, pos, ref vel, 0.2f);
+		}
 	}
 
 	public void moveCamera(float x) {
 		StartCoroutine(MoveX (x));
+	}
+
+	public void moveToOrigin(){
+		StartCoroutine(MoveOrigin());
 	}
 
 	IEnumerator MoveX(float x) {
@@ -96,6 +109,13 @@ public class CameraScript : MonoBehaviour {
 		}
 		leftPillar.SetActive(true);
 		rightPillar.SetActive(true);
+	}
+
+	IEnumerator MoveOrigin() {
+		Tweener twn = HOTween.To (camera.transform, 1.0f, new TweenParms().Prop ("position", new Vector3(0, 0, -10)).Ease(EaseType.EaseInQuad));
+		while(!twn.isComplete) {
+			yield return null;
+		}
 	}
 
 	public void Shake(){

@@ -42,6 +42,7 @@ public class LastScene : Scene {
 		player_arrived2 = false;
 		scene_started = false;
 		player.isAlone = false;
+		player.IsDead = false;
 	}
 
 	IEnumerator DelayedGo(){
@@ -93,8 +94,10 @@ public class LastScene : Scene {
 		yield return new WaitForSeconds(3.0f);
 		engine.Dialogue("One of us has to go first", 1.0f);
 		yield return new WaitForSeconds(3.0f);
-		engine.Dialogue("Press Left if she goes.\nPress Right if he goes.", 3.0f);
-		yield return new WaitForSeconds(3.0f);
+		engine.Dialogue2("Press Left if she goes.", 1.5f);
+		yield return new WaitForSeconds(0.5f);
+		engine.Dialogue("Press Right if he goes.", 1.5f);
+		yield return new WaitForSeconds(1.5f);
 		engine.PlayerGoFirst = true;
 		while(true){
 			if(Input.GetKeyDown(KeyCode.LeftArrow)){
@@ -106,6 +109,7 @@ public class LastScene : Scene {
 		}
 		yield return null;
 		engine.Dialogue();
+		engine.Dialogue2();
 		yield return new WaitForSeconds(1.0f);
 		player.isAlone = true;
 		bool choice = engine.PlayerGoFirst;
@@ -131,17 +135,22 @@ public class LastScene : Scene {
 			Female fem = Instantiate(_female_prefab, pos, Quaternion.identity) as Female;
 			fem.gameObject.SetActive(true);
 			fem.climbing = true;
-			engine.Dialogue("Drat! My leg!", 1.0f);
+			engine.Dialogue2("Drat! My leg!", 1.0f);
 			yield return new WaitForSeconds(3.0f);
-			engine.Dialogue("I can't climb fast", 1.0f);
-			yield return new WaitForSeconds(3.0f);
+			engine.Dialogue2("Sorry. I'm slowing you down.", 1.0f);
+			yield return new WaitForSeconds(1.0f);
+			engine.Dialogue("Everything's gonna be alright.", 1.0f);
+			yield return new WaitForSeconds(1.0f);
+			engine.Dialogue2();
+			yield return new WaitForSeconds(1.0f);
 			engine.Dialogue();
-		
+
 			boss.EndingPos(cam.transform.position.y);
 			engine.endingBox.SetActive(true);
 			yield return new WaitForSeconds(2.0f);
 			engine.Dialogue("Wait, what?", 0.8f);
 			engine.lastTarget.SetActive(true);
+			AudioManager.Instance.playSound(Sfx.LOCK, engine.lastTarget.transform.position);
 			cam.chasing= true;
 			player.canControl = true;
 			float lasttimer = 0;

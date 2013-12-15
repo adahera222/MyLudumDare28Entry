@@ -187,6 +187,7 @@ public class PlayerPhysics : MonoBehaviour {
 			isDead = true;
 			invincible = false;
 		} else if(c.gameObject.tag == "GoodEnding") {
+			AudioManager.Instance.playSound(Sfx.LANDED, transform.position);
 			GameEngine.Instance.GoodEnding = true;
 		}
 	}

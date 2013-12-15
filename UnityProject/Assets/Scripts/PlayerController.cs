@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour {
 	public bool isAlone;
 	[HideInInspector]
 	public bool freeze;
+	[HideInInspector]
+	public bool autoMove;
 
 	private PlayerPhysics playerPhysics;
 	tk2dSpriteAnimator animator;
@@ -95,8 +97,10 @@ public class PlayerController : MonoBehaviour {
 
 		if(canControl && Input.GetButtonDown("Jump")) {
 			if(!climbing && playerPhysics.grounded) {
+				AudioManager.Instance.playSound(Sfx.JUMP, transform.position);
 				delta.y = jumpHeight;
 			} else if(climbing) {
+				AudioManager.Instance.playSound(Sfx.JUMP, transform.position);
 				upheld = true;
 				climbing = false;
 				delta.y = playerPhysics.atEdge() ? powerjumpHeight : jumpHeight;
@@ -133,6 +137,12 @@ public class PlayerController : MonoBehaviour {
 			playerPhysics.Move(delta * Time.deltaTime, moveDirX);
 	}
 
+	public void Flip(){
+		bool flip = playerPhysics.flipX;
+		playerPhysics.flipX = !flip;
+		animator.Sprite.FlipX = !flip;
+	}
+
 	void Animate() {
 		string pre = isAlone ? "he_" : "duo_";
 		float inputX = Input.GetAxisRaw("Horizontal");
@@ -158,7 +168,7 @@ public class PlayerController : MonoBehaviour {
 				animator.Play (pre + "fall");
 			else
 				animator.Play(pre + "rise");
-		} else if(delta.x != 0 && inputX != 0)
+		} else if(delta.x != 0 && (inputX != 0 || autoMove))
 			animator.Play(pre + "run");
 		else if(delta.x != 0 && inputX == 0)
 			animator.Play(pre + "slide");
@@ -181,6 +191,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void Kill(){
+		AudioManager.Instance.playSound(Sfx.DEATH, transform.position);
 		canControl = false;
 		moveDirX = 0;
 		moveDirY = 0;

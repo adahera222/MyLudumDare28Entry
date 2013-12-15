@@ -1,15 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Scenes\EndingScene.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameEngine.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameEngine.cs" Line="32" Column="37" />
-      <File FileName="Assets\Scripts\PlayerPhysics.cs" Line="65" Column="20" />
-      <File FileName="Assets\Scripts\PlayerController.cs" Line="195" Column="14" />
-      <File FileName="Assets\Scripts\BossScript.cs" Line="451" Column="33" />
-      <File FileName="Assets\Scripts\Scenes\GameScene.cs" Line="31" Column="3" />
-      <File FileName="Assets\Scripts\CameraScript.cs" Line="113" Column="3" />
-      <File FileName="Assets\Scripts\Scenes\LastScene.cs" Line="136" Column="37" />
-      <File FileName="Assets\Scripts\Scenes\EndingScene.cs" Line="41" Column="3" />
+      <File FileName="Assets\Scripts\Scenes\OpeningScene.cs" Line="103" Column="23" />
+      <File FileName="Assets\Scripts\Scenes\LastScene.cs" Line="155" Column="29" />
+      <File FileName="Assets\Scripts\Entities\Female.cs" Line="38" Column="65" />
+      <File FileName="Assets\Scripts\GameEngine.cs" Line="59" Column="32" />
+      <File FileName="Assets\Scripts\Scenes\GameScene.cs" Line="51" Column="52" />
+      <File FileName="Assets\Scripts\AudioManager.cs" Line="95" Column="10" />
+      <File FileName="Assets\Scripts\CameraScript.cs" Line="19" Column="37" />
+      <File FileName="Assets\Scripts\PlayerController.cs" Line="194" Column="44" />
+      <File FileName="Assets\Scripts\BossScript.cs" Line="67" Column="19" />
+      <File FileName="Assets\Scripts\Entities\Projectile.cs" Line="26" Column="2" />
+      <File FileName="Assets\Scripts\Scenes\EndingScene.cs" Line="88" Column="17" />
+      <File FileName="Assets\Scripts\PlayerPhysics.cs" Line="190" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

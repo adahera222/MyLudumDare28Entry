@@ -70,7 +70,7 @@ public class PlayerPhysics : MonoBehaviour {
 			float y = p.y + c.y + s.y/2 * dir;
 
 			// Quick solution for unexpected issue
-			if(flipX) x -= 0.3f;
+			if(flipX) x -= 0.02f;
 
 			ray = new Ray(new Vector2(x,y), new Vector2(0, dir));
 			Debug.DrawRay(ray.origin,ray.direction);
@@ -91,7 +91,7 @@ public class PlayerPhysics : MonoBehaviour {
 				float y = p.y + c.y - s.y/2 + s.y/(divY-1) * i;
 
 				// Quick solution for unexpected issue
-				if(flipX) x -= 0.3f;
+				if(flipX) x -= 0.02f;
 
 				ray = new Ray(new Vector2(x,y), new Vector2(dir, 0));
 				Debug.DrawRay(ray.origin,ray.direction);
@@ -111,7 +111,7 @@ public class PlayerPhysics : MonoBehaviour {
 			Vector3 o = new Vector3(p.x + c.x + s.x/2 * Mathf.Sign (deltaX), p.y + c.y + s.y/2 * Mathf.Sign (deltaY));
 
 			// Quick solution for unexpected issue
-			if(flipX) o.x -= 0.3f;
+			if(flipX) o.x -= 0.02f;
 
 			ray = new Ray(o, pdir.normalized);
 

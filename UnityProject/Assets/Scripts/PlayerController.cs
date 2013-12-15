@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour {
 	public bool upheld;
 	[HideInInspector]
 	public bool canControl = true;
+	[HideInInspector]
+	public bool isAlone;
+	[HideInInspector]
+	public bool freeze;
 
 	private PlayerPhysics playerPhysics;
 	tk2dSpriteAnimator animator;
@@ -125,10 +129,19 @@ public class PlayerController : MonoBehaviour {
 		}
 		
 		Animate();
-		playerPhysics.Move(delta * Time.deltaTime, moveDirX);
+		if(!freeze)
+			playerPhysics.Move(delta * Time.deltaTime, moveDirX);
 	}
 
 	void Animate() {
+		string pre = isAlone ? "he_" : "duo_";
+		float inputX = Input.GetAxisRaw("Horizontal");
+
+		if(playerPhysics.isDead){
+			animator.Play (pre + "death");
+			return;
+		}
+
 		if(delta.x != 0) {
 			animator.Sprite.FlipX = delta.x < 0;
 			playerPhysics.flipX = delta.x < 0;
@@ -136,19 +149,21 @@ public class PlayerController : MonoBehaviour {
 
 		if(climbing) {
 			if(delta.y == 0)
-				animator.Play ("ClimbIdle");
+				animator.Play (pre + "hang");
 			else
-				animator.Play ("Climbing");
+				animator.Play (pre + "climb");
 		}
 		else if(!playerPhysics.grounded) {
 			if(delta.y <= 0)
-				animator.Play ("Falling");
+				animator.Play (pre + "fall");
 			else
-				animator.Play("Rising");
-		} else if(delta.x != 0)
-			animator.Play("Running");
+				animator.Play(pre + "rise");
+		} else if(delta.x != 0 && inputX != 0)
+			animator.Play(pre + "run");
+		else if(delta.x != 0 && inputX == 0)
+			animator.Play(pre + "slide");
 		else
-			animator.Play("Idle");
+			animator.Play(pre + "idle");
 	}
 
 	private float IncrementTowards(float n, float target, float a) {
@@ -171,6 +186,13 @@ public class PlayerController : MonoBehaviour {
 		moveDirY = 0;
 		climbing = false;
 		playerPhysics.climbing = false;
+		playerPhysics.isDead = true;
+	}
+
+	public void Halt(){
+		currentSpeedX = 0;
+		currentSpeedY = 0;
+		delta.y = 0;
 	}
 
 	public void Respawn(Vector3 pos) {

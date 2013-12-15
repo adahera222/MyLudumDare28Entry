@@ -16,9 +16,11 @@ public class GameEngine : MonoBehaviour {
 	public tk2dSprite lastGround;
 	public tk2dTextMesh dialogue;
 	public tk2dTextMesh logoText;
-	public GameObject choicePic;
 	public GameObject lastTarget;
 	public GameObject endingBox;
+
+	public GameObject ending1;
+	public GameObject ending2;
 
 	[HideInInspector]
 	public bool PlayerGoFirst;
@@ -83,20 +85,5 @@ public class GameEngine : MonoBehaviour {
 	public void Dialogue(){
 		dialogue.text = "";
 		dialogue.Commit();
-	}
-
-	public IEnumerator DisplayChoice(){
-		PlayerGoFirst = false;
-		choicePic.SetActive(true);
-		while(true){
-			if(Input.GetKeyDown(KeyCode.LeftArrow)){
-				PlayerGoFirst = true;
-				break;
-			} else if(Input.GetKeyDown(KeyCode.RightArrow))
-				break;
-			yield return null;
-		}
-		choicePic.SetActive(false);
-		yield return null;
 	}
 }

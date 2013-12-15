@@ -3,8 +3,16 @@ using System.Collections;
 
 public class GameScene : Scene {
 
-	MOVE_TYPE[] pattern_type = new MOVE_TYPE[1]{
+	MOVE_TYPE[] pattern_type = new MOVE_TYPE[9]{
+		MOVE_TYPE.BULLETHELL1,
+		MOVE_TYPE.LASEREYE1,
+		MOVE_TYPE.SKYROCKET1,
+		MOVE_TYPE.BULLETHELL2,
+		MOVE_TYPE.LASEREYE2,
 		MOVE_TYPE.SKYROCKET2,
+		MOVE_TYPE.BULLETHELL3,
+		MOVE_TYPE.LASEREYE3,
+		MOVE_TYPE.SKYROCKET3,
 	};
 
 	private CameraScript cam;
@@ -26,7 +34,7 @@ public class GameScene : Scene {
 		boss = BossScript.Instance;
 
 		cam.transform.position = new Vector3(0.0f, 0.0f, -10.0f);
-		player.transform.position = new Vector3(-6.0f, -1f, 0.0f);
+		player.transform.position = new Vector3(-6.0f, -6.845f, 0.0f);
 
 		started = false;
 		cam.rising = false;
@@ -54,7 +62,7 @@ public class GameScene : Scene {
 	public void Restart()
 	{
 		cam.transform.position = new Vector3(0.0f, 0.0f, -10.0f);
-		player.transform.position = new Vector3(-6.0f, -1f, 0.0f);
+		player.transform.position = new Vector3(-6.0f, -6.845f, 0.0f);
 
 		started = false;
 		cam.rising = false;
@@ -97,16 +105,20 @@ public class GameScene : Scene {
 	IEnumerator BossPattern(){
 		boss.Activate();
 		for(var i=0; i<pattern_type.Length; i+=1){
-			boss.MakeMove(pattern_type[i], cam.transform.position.y);
+			boss.MakeMove(pattern_type[i]);
 			while(boss.makingMove){
+				if(lives == 0)
+					yield break;
 				yield return null;
 			}
 		}
 		yield return new WaitForSeconds(5.0f);
 		cam.rising = false;
-		cam.FadeDark(3.0f);
+		cam.FadeDark(2.0f);
 		player.canControl = false;
-		yield return new WaitForSeconds(3.0f);
+		player.AutoMove(0, 0.5f);
+		yield return new WaitForSeconds(2.0f);
+		player.AutoMove(0, 0);
 		_isDone = true;
 		yield return null;
 	}
@@ -118,6 +130,9 @@ public class GameScene : Scene {
 			isDead = false;
 		} else {
 			cam.rising = false;
+			cam.FadeDark(2.0f);
+			yield return new WaitForSeconds(2.0f);
+			cam.FadeClear(2.0f);
 			Restart();
 		}
 	}

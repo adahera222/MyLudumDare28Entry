@@ -25,6 +25,7 @@ public class LastScene : Scene {
 
 		cam.transform.position = new Vector3(100.0f, 0.0f, -10.0f);
 		cam.rising = true;
+		player.freeze = false;
 		player.transform.position = new Vector3(115.0f, 0.0f, 0.0f);
 		cam.FadeClear(1.0f);
 		player.canControl = false;
@@ -40,6 +41,7 @@ public class LastScene : Scene {
 		player_arrived = false;
 		player_arrived2 = false;
 		scene_started = false;
+		player.isAlone = false;
 	}
 
 	IEnumerator DelayedGo(){
@@ -91,38 +93,57 @@ public class LastScene : Scene {
 		yield return new WaitForSeconds(3.0f);
 		engine.Dialogue("One of us has to go first", 1.0f);
 		yield return new WaitForSeconds(3.0f);
+		engine.Dialogue("Press Left if she goes.\nPress Right if he goes.", 3.0f);
+		yield return new WaitForSeconds(3.0f);
+		engine.PlayerGoFirst = true;
+		while(true){
+			if(Input.GetKeyDown(KeyCode.LeftArrow)){
+				engine.PlayerGoFirst = false;
+				break;
+			} else if(Input.GetKeyDown(KeyCode.RightArrow))
+				break;
+			yield return null;
+		}
+		yield return null;
 		engine.Dialogue();
-		yield return StartCoroutine(engine.DisplayChoice());
-
+		yield return new WaitForSeconds(1.0f);
+		player.isAlone = true;
 		bool choice = engine.PlayerGoFirst;
 		if(choice){
-			Vector3 pos = new Vector3(105f, 23f, 0.1f);
+			Vector3 pos = new Vector3(105f, 23.56365f, -0.1f);
 			Female fem = Instantiate(_female_prefab, pos, Quaternion.identity) as Female;
 			fem.gameObject.SetActive(true);
-			engine.Dialogue("I'll help you up there", 1.0f);
-			player.AutoMove(0, 0.5f);
-			yield return new WaitForSeconds(2.0f);
+			tk2dSpriteAnimator anim = fem.GetComponent<tk2dSpriteAnimator>();
+			yield return null;
+			anim.Play("she_idle");
+			player.AutoMove(0, 0.3f);
+			yield return new WaitForSeconds(1.0f);
+			fem.climbing = true;
+			anim.Play ("she_climb");
+			yield return new WaitForSeconds(1.0f);
+			cam.FadeDark(1.0f);
+			yield return new WaitForSeconds(1.0f);
+			player.AutoMove(0, 0);
 			engine.Dialogue();
-			cam.FadeDark(3.0f);
 			_isDone = true;
 		} else {
 			Vector3 pos = new Vector3(105f, 25f, 0.1f);
 			Female fem = Instantiate(_female_prefab, pos, Quaternion.identity) as Female;
 			fem.gameObject.SetActive(true);
 			fem.climbing = true;
-			engine.Dialogue("Curse my leg", 1.0f);
-			yield return new WaitForSeconds(2.0f);
+			engine.Dialogue("Drat! My leg!", 1.0f);
+			yield return new WaitForSeconds(3.0f);
 			engine.Dialogue("I can't climb fast", 1.0f);
-			yield return new WaitForSeconds(2.0f);
-			engine.Dialogue("Don't worry. Take your time", 1.0f);
-			yield return new WaitForSeconds(1.0f);
-			cam.chasing= true;
-			player.canControl = true;
+			yield return new WaitForSeconds(3.0f);
+			engine.Dialogue();
+		
 			boss.EndingPos(cam.transform.position.y);
 			engine.endingBox.SetActive(true);
 			yield return new WaitForSeconds(2.0f);
 			engine.Dialogue("Wait, what?", 0.8f);
 			engine.lastTarget.SetActive(true);
+			cam.chasing= true;
+			player.canControl = true;
 			float lasttimer = 0;
 			while(true){
 				lasttimer += Time.deltaTime;
@@ -134,6 +155,8 @@ public class LastScene : Scene {
 					fem.climbing = false;
 					yield return new WaitForSeconds(0.3f);
 					player.Kill();
+					tk2dSpriteAnimator anim = fem.GetComponent<tk2dSpriteAnimator>();
+					anim.Play ("she_death");
 					yield return new WaitForSeconds(1.0f);
 					cam.FadeDark(1.0f);
 					yield return new WaitForSeconds(3.0f);
@@ -141,11 +164,16 @@ public class LastScene : Scene {
 					Destroy(fem.gameObject);
 					cam.chasing= false;
 					boss.force_stop = true;
+					player.IsDead = false;
+					player.freeze = true;
+					player.transform.position = new Vector3(115.0f, 0.0f, 0.0f);
+					player.Halt();
 					break;
 				}
 				if(engine.GoodEnding){
 					engine.Dialogue();
 					cam.Fade(Color.white, 0.1f);
+					yield return new WaitForSeconds(1.0f);
 					engine.endingBox.SetActive(false);
 					engine.lastTarget.SetActive(false);
 					Destroy(fem.gameObject);

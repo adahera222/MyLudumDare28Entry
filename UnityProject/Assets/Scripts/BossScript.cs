@@ -4,11 +4,15 @@ using Holoville.HOTween;
 using Holoville.HOTween.Plugins;
 
 public enum MOVE_TYPE {
-	JUSTRISE,
-	BULLETHELL,
-	LASEREYE,
-	SKYROCKET,
-	SKYROCKET2
+	BULLETHELL1,
+	BULLETHELL2,
+	BULLETHELL3,
+	LASEREYE1,
+	LASEREYE2,
+	LASEREYE3,
+	SKYROCKET1,
+	SKYROCKET2,
+	SKYROCKET3,
 };
 
 public class BossScript : MonoBehaviour {
@@ -35,13 +39,11 @@ public class BossScript : MonoBehaviour {
 	public Transform player_pos;
 
 	public tk2dSprite thrust1;
-	public tk2dSprite thrust2;
 
 	public tk2dSprite arrow_left;
 	public tk2dSprite arrow_mid;
 	public tk2dSprite arrow_right;
-
-	public tk2dSprite rocket_nozzle;
+	
 	public tk2dSprite rocket_exp;
 
 	private bool rising;
@@ -75,7 +77,7 @@ public class BossScript : MonoBehaviour {
 
 	public void Restart(){
 		Boss.SetActive(false);
-		Boss.transform.position = new Vector3(-26.90941f, 0, 0);
+		Boss.transform.position = new Vector3(-28.0107f, 0, 0);
 	}
 
 	public void PrepareFinale(){
@@ -112,97 +114,212 @@ public class BossScript : MonoBehaviour {
 		Boss.SetActive(true);
 	}
 
-	public void MakeMove(MOVE_TYPE type, float cy) {
+	public void MakeMove(MOVE_TYPE type) {
 		makingMove = true;
 		switch(type){
-		case MOVE_TYPE.JUSTRISE:
-			StartCoroutine(JustRise(cy));
+		case MOVE_TYPE.BULLETHELL1:
+			StartCoroutine(RiseAndShoot(0));
 			break;
-		case MOVE_TYPE.BULLETHELL:
-			StartCoroutine(RiseAndShoot(cy));
+		case MOVE_TYPE.BULLETHELL2:
+			StartCoroutine(RiseAndShoot(1));
 			break;
-		case MOVE_TYPE.LASEREYE:
-			StartCoroutine(RiseAndLaser(cy));
+		case MOVE_TYPE.BULLETHELL3:
+			StartCoroutine(RiseAndShoot(2));
 			break;
-		case MOVE_TYPE.SKYROCKET:
-			StartCoroutine(RiseAndRocket(cy));
+		case MOVE_TYPE.LASEREYE1:
+			StartCoroutine(RiseAndLaser(0));
+			break;
+		case MOVE_TYPE.LASEREYE2:
+			StartCoroutine(RiseAndLaser(1));
+			break;
+		case MOVE_TYPE.LASEREYE3:
+			StartCoroutine(RiseAndLaser(2));
+			break;
+		case MOVE_TYPE.SKYROCKET1:
+			StartCoroutine(RiseAndRocket(0));
 			break;
 		case MOVE_TYPE.SKYROCKET2:
-			StartCoroutine(RiseAndLastRocket(cy));
+			StartCoroutine(RiseAndRocket(1));
+			break;
+		case MOVE_TYPE.SKYROCKET3:
+			StartCoroutine(RiseAndLastRocket());
 			break;
 		default:
 			break;
 		}
 	}
 
-	IEnumerator JustRise(float cy){
-		yield return StartCoroutine(Rise(cy, 20));
-		makingMove = false;
-	}
+	IEnumerator RiseAndShoot(int level){
+		if(level == 0){
+			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(15f, 20f)));
+			yield return new WaitForSeconds(2.0f);
+			Shoot(0f, 0.25f);
+			Shoot(20f, 0.25f);
+			Shoot(-20f, 0.25f);
+			yield return new WaitForSeconds(0.5f);
+			Shoot(0f, 0.25f);
+			Shoot(20f, 0.25f);
+			Shoot(-20f, 0.25f);
+			yield return new WaitForSeconds(0.5f);
+			Shoot(0f, 0.25f);
+			Shoot(20f, 0.25f);
+			Shoot(-20f, 0.25f);
+			yield return new WaitForSeconds(2.0f);
+		} else if(level == 1){
+			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(15f, 20f)));
+			yield return new WaitForSeconds(1.0f);
+			Shoot(0f, 0.30f);
+			Shoot(20f, 0.30f);
+			Shoot(40f, 0.30f);
+			Shoot(-20f, 0.30f);
+			Shoot(-40f, 0.30f);
+			yield return new WaitForSeconds(0.5f);
+			Shoot(0f, 0.30f);
+			Shoot(20f, 0.30f);
+			Shoot(40f, 0.30f);
+			Shoot(-20f, 0.30f);
+			Shoot(-40f, 0.30f);
+			yield return new WaitForSeconds(0.5f);
+			Shoot(0f, 0.30f);
+			Shoot(20f, 0.30f);
+			Shoot(40f, 0.30f);
+			Shoot(-20f, 0.30f);
+			Shoot(-40f, 0.30f);
+			yield return new WaitForSeconds(2.0f);
+		} else {
+			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(15f, 20f)));
+			yield return new WaitForSeconds(0.5f);
+			Shoot(0f, 0.35f);
+			Shoot(18f, 0.35f);
+			Shoot(-18f, 0.35f);
+			yield return new WaitForSeconds(0.4f);
+			Shoot(0f, 0.35f);
+			Shoot(18f, 0.35f);
+			Shoot(-18f, 0.35f);
+			yield return new WaitForSeconds(0.4f);
+			Shoot(0f, 0.35f);
+			Shoot(18f, 0.35f);
+			Shoot(-18f, 0.35f);
 
-	IEnumerator RiseAndShoot(float cy){
-		yield return StartCoroutine(Rise(cy, Random.Range(10f, 20f)));
+			yield return new WaitForSeconds(0.4f);
+			Shoot(0f, 0.35f);
+			Shoot(18f, 0.35f);
+			Shoot(36f, 0.35f);
+			Shoot(-18f, 0.35f);
+			Shoot(-36f, 0.35f);
 
-		Shoot(0f, 0.35f);
-		Shoot(15f, 0.35f);
-		Shoot(-15f, 0.35f);
-		yield return new WaitForSeconds(0.5f);
-		Shoot(0f, 0.35f);
-		Shoot(15f, 0.35f);
-		Shoot(-15f, 0.35f);
-		yield return new WaitForSeconds(0.5f);
-		Shoot(0f, 0.35f);
-		Shoot(15f, 0.35f);
-		Shoot(-15f, 0.35f);
-		makingMove = false;
-	}
+			yield return new WaitForSeconds(0.4f);
+			Shoot(0f, 0.35f);
+			Shoot(18f, 0.35f);
+			Shoot(36f, 0.35f);
+			Shoot(-18f, 0.35f);
+			Shoot(-36f, 0.35f);
 
-	IEnumerator RiseAndLaser(float cy){
-		yield return StartCoroutine(Rise(cy, Random.Range(10f, 20f)));
-		Transform t = Aim (1f, 1f);
-		yield return new WaitForSeconds(2f);
-		Laser (t.position);
-		makingMove = false;
-	}
-
-	IEnumerator RiseAndRocket(float cy){
-		yield return StartCoroutine(Rise(cy, 10));
-		for(int i=0; i<3; i++){
-			rocketTimer = 0;
-			yield return StartCoroutine(Rocket());
+			yield return new WaitForSeconds(0.4f);
+			Shoot(0f, 0.35f);
+			Shoot(18f, 0.35f);
+			Shoot(36f, 0.35f);
+			Shoot(-18f, 0.35f);
+			Shoot(-36f, 0.35f);
+			yield return new WaitForSeconds(2.0f);
 		}
-		yield return new WaitForSeconds(1f);
-		yield return StartCoroutine(Warning(1.0f, 1));
-		FallRocket(1);
-		yield return new WaitForSeconds(0.5f);
-		yield return StartCoroutine(Warning(1.0f, 0));
-		FallRocket(0);
-		yield return new WaitForSeconds(0.5f);
-		yield return StartCoroutine(Warning(1.0f, 0));
-		FallRocket(0);
 		makingMove = false;
 	}
 
-	IEnumerator RiseAndLastRocket(float cy){
-		yield return StartCoroutine(Rise(cy, 10));
+	IEnumerator RiseAndLaser(int level){
+		if(level == 0){
+			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(10f, 20f)));
+			Transform t = Aim (1.5f, 0.3f);
+			yield return new WaitForSeconds(1.8f);
+			Laser (t.position);
+			yield return new WaitForSeconds(2.0f);
+		} else if(level == 1){
+			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(15f, 20f)));
+			Transform t = Aim (0.8f, 0.2f);
+			yield return new WaitForSeconds(1.0f);
+			Laser (t.position);
+			t = Aim (0.8f, 0.2f);
+			yield return new WaitForSeconds(1.0f);
+			Laser (t.position);
+			t = Aim (0.8f, 0.2f);
+			yield return new WaitForSeconds(1.0f);
+			Laser (t.position);
+			yield return new WaitForSeconds(2.0f);
+		} else {
+			yield return StartCoroutine(Rise(cam.transform.position.y, Random.Range(15f, 20f)));
+			Transform t = Aim (0.5f, 0.2f);
+			yield return new WaitForSeconds(0.7f);
+			Laser (t.position);
+			t = Aim (0.5f, 0.2f);
+			yield return new WaitForSeconds(0.7f);
+			Laser (t.position);
+			t = Aim (0.5f, 0.2f);
+			yield return new WaitForSeconds(0.7f);
+			Laser (t.position);
+			t = Aim (0.5f, 0.2f);
+			yield return new WaitForSeconds(0.7f);
+			Laser (t.position);
+			t = Aim (0.5f, 0.2f);
+			yield return new WaitForSeconds(0.7f);
+			Laser (t.position);
+			yield return new WaitForSeconds(2.0f);
+		}
+		makingMove = false;
+	}
+
+	IEnumerator RiseAndRocket(int level){
+		if(level == 0) {
+			yield return StartCoroutine(Rise(cam.transform.position.y, 10));
+			for(int i=0; i<3; i++){
+				yield return StartCoroutine(Rocket());
+			}
+			yield return new WaitForSeconds(1f);
+			yield return StartCoroutine(Warning(1.0f, 1));
+			FallRocket(1);
+			yield return new WaitForSeconds(0.5f);
+			yield return StartCoroutine(Warning(1.0f, 2));
+			FallRocket(2);
+			yield return new WaitForSeconds(0.5f);
+			yield return StartCoroutine(Warning(1.0f, 0));
+			FallRocket(0);
+		} else {
+			yield return StartCoroutine(Rise(cam.transform.position.y, 10));
+			for(int i=0; i<3; i++){
+				yield return StartCoroutine(Rocket());
+			}
+			yield return new WaitForSeconds(0.4f);
+			yield return StartCoroutine(Warning(1.0f, 0));
+			FallRocket(0);
+			yield return new WaitForSeconds(0.4f);
+			yield return StartCoroutine(Warning(1.0f, 0));
+			FallRocket(0);
+			yield return new WaitForSeconds(0.4f);
+			yield return StartCoroutine(Warning(1.0f, 0));
+			FallRocket(0);
+		}
+		makingMove = false;
+	}
+
+	IEnumerator RiseAndLastRocket(){
+		yield return StartCoroutine(Rise(cam.transform.position.y, 10));
 		for(int i=0; i<5; i++){
-			rocketTimer = 0;
 			yield return StartCoroutine(Rocket());
 		}
 		yield return new WaitForSeconds(1f);
 		cam.Shake();
+		StartCoroutine(Rise(cam.transform.position.y, 10));
 		yield return new WaitForSeconds(1f);
-		yield return StartCoroutine(Rise(cy, 10));
-		yield return StartCoroutine(Warning(1.0f, 2));
+		yield return StartCoroutine(Warning(1.0f, 3));
 		FallRock(0);
 		yield return new WaitForSeconds(0.5f);
-		yield return StartCoroutine(Warning(1.0f, 3));
+		yield return StartCoroutine(Warning(1.0f, 4));
 		FallRock(1);
 		yield return new WaitForSeconds(0.5f);
-		yield return StartCoroutine(Warning(1.0f, 2));
+		yield return StartCoroutine(Warning(1.0f, 3));
+		StartCoroutine(Rise(cam.transform.position.y, 10));
 		FallRock(0);
 		yield return new WaitForSeconds(0.5f);
-		yield return StartCoroutine(Warning(1.0f, 3));
+		yield return StartCoroutine(Warning(1.0f, 4));
 		FallRock(1);
 		makingMove = false;
 	}
@@ -250,24 +367,23 @@ public class BossScript : MonoBehaviour {
 		pj.Laser(pos, _Exp_Prefab);
 	}
 
-	float rocketTimer;
+	float rockettimer;
 	IEnumerator Rocket(){
-		Vector3 rnpos = rocket_nozzle.transform.position;
-		rnpos.y -= 1;
-		rocket_nozzle.transform.position = rnpos;
-		Tweener twn = HOTween.To (rocket_nozzle.transform, 0.3f, new TweenParms().Prop ("position", new Vector3(0, 1f, 0), true));
 		Color col = rocket_exp.color;
 		col.a = 1f;
 		rocket_exp.color = col;
-		while(!twn.isComplete) {
-			rocketTimer+= Time.deltaTime;
-			if(rocketTimer > 0.1f){
+		rockettimer = 0.0f;
+		while(true){
+			rockettimer += Time.deltaTime;
+			if(rockettimer > 0.1f) {
 				col.a = 0f;
 				rocket_exp.color = col;
 			}
+			if(rockettimer > 0.2f)
+				break;
 			yield return null;
 		}
-		rocketTimer = 0;
+	
 	}
 
 	float warnTimer;
@@ -280,17 +396,22 @@ public class BossScript : MonoBehaviour {
 			if(blinkTimer > 0.1f){
 				if(type == 1)
 					col = arrow_left.color;
+				else if(type == 2)
+					col = arrow_right.color;
 				else
 					col = arrow_mid.color;
+				//
 				col.a = col.a == 0 ? 1.0f : 0.0f;
-				if(type == 0){
+				if(type == 0)
 					arrow_mid.color = col;
-				} else if(type == 1){
+				else if(type == 1)
 					arrow_left.color = col;
-				} else if(type == 2){
+				else if(type == 2)
+					arrow_right.color = col;
+				else if(type == 3){
 					arrow_mid.color = col;
 					arrow_left.color = col;
-				} else {
+				} else if(type == 4){
 					arrow_mid.color = col;
 					arrow_right.color = col;
 				}
@@ -311,8 +432,10 @@ public class BossScript : MonoBehaviour {
 		Vector3 pos;
 		if(type == 0)
 			pos = new Vector3(arrow_mid.transform.position.x, arrow_mid.transform.position.y + 5, 0);
-		else
+		else if(type == 1)
 			pos = new Vector3(arrow_left.transform.position.x, arrow_left.transform.position.y + 5, 0);
+		else
+			pos = new Vector3(arrow_right.transform.position.x, arrow_left.transform.position.y + 5, 0);
 		Projectile pj = Instantiate(_Rocket_Prefab, pos, Quaternion.identity) as Projectile;
 		pj.gameObject.SetActive(true);
 		pj.Fire(180, 0.5f, 3);
@@ -351,7 +474,6 @@ public class BossScript : MonoBehaviour {
 				col = thrust1.color;
 				col.a = col.a == 0 ? 1.0f : 0.0f;
 				thrust1.color = col;
-				thrust2.color = col;
 				thrustCounter = 0.0f;
 			}
 			yield return null;
@@ -359,7 +481,6 @@ public class BossScript : MonoBehaviour {
 		col = thrust1.color;
 		col.a = 0.0f;
 		thrust1.color = col;
-		thrust2.color = col;
 		yield return null;
 	}
 }

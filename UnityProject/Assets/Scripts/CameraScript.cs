@@ -61,6 +61,9 @@ public class CameraScript : MonoBehaviour {
 			Vector3 p = transform.position;
 			p.y += riseSpeed * Time.deltaTime;
 			transform.position = p;
+
+			if(shaking)
+				originalPosition.y += riseSpeed * Time.deltaTime;
 		}
 
 		if(shaking){
@@ -99,6 +102,13 @@ public class CameraScript : MonoBehaviour {
 		originalPosition = transform.position;
 		shake_intensity = .3f;
 		shake_decay = 0.002f;
+		shaking = true;
+	}
+
+	public void LongShake(){
+		originalPosition = transform.position;
+		shake_intensity = .5f;
+		shake_decay = 0.001f;
 		shaking = true;
 	}
 
